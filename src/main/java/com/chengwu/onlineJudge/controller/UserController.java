@@ -86,7 +86,7 @@ public class UserController {
      * @param request
      * @return
      */
-    @PostMapping("/login")
+    @PostMapping("/get/login")
     public BaseResponse<LoginUserVO> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
         if (userLoginRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);

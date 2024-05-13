@@ -3,7 +3,6 @@ package com.chengwu.onlineJudge.job.once;
 import com.chengwu.onlineJudge.esdao.PostEsDao;
 import com.chengwu.onlineJudge.model.dto.post.PostEsDTO;
 import com.chengwu.onlineJudge.model.entity.Post;
-import com.chengwu.onlineJudge.service.PostService;
 
 import java.util.List;
 import java.util.stream.Collectors;

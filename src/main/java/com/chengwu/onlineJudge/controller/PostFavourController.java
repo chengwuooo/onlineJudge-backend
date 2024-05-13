@@ -12,8 +12,6 @@ import com.chengwu.onlineJudge.model.dto.postfavour.PostFavourQueryRequest;
 import com.chengwu.onlineJudge.model.entity.Post;
 import com.chengwu.onlineJudge.model.entity.User;
 import com.chengwu.onlineJudge.model.vo.PostVO;
-import com.chengwu.onlineJudge.service.PostFavourService;
-import com.chengwu.onlineJudge.service.PostService;
 import com.chengwu.onlineJudge.service.UserService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

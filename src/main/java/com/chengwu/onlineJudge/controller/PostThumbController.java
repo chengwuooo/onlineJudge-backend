@@ -6,7 +6,6 @@ import com.chengwu.onlineJudge.common.ResultUtils;
 import com.chengwu.onlineJudge.exception.BusinessException;
 import com.chengwu.onlineJudge.model.dto.postthumb.PostThumbAddRequest;
 import com.chengwu.onlineJudge.model.entity.User;
-import com.chengwu.onlineJudge.service.PostThumbService;
 import com.chengwu.onlineJudge.service.UserService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
