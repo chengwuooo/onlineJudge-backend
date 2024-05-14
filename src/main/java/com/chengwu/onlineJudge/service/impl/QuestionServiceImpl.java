@@ -151,8 +151,6 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
         questionVOPage.setRecords(questionVOList);
         return questionVOPage;
     }
-
-
 }
 
 

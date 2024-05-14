@@ -1,21 +1,32 @@
 package com.chengwu.onlineJudge.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chengwu.onlineJudge.common.ErrorCode;
+import com.chengwu.onlineJudge.constant.CommonConstant;
 import com.chengwu.onlineJudge.exception.BusinessException;
 import com.chengwu.onlineJudge.model.dto.questionsubmit.QuestionSubmitAddRequest;
+import com.chengwu.onlineJudge.model.dto.questionsubmit.QuestionSubmitQueryRequest;
 import com.chengwu.onlineJudge.model.entity.Question;
 import com.chengwu.onlineJudge.model.entity.QuestionSubmit;
 import com.chengwu.onlineJudge.mapper.QuestionSubmitMapper;
 import com.chengwu.onlineJudge.model.entity.User;
 import com.chengwu.onlineJudge.model.enums.QuestionSubmitLanguageEnum;
 import com.chengwu.onlineJudge.model.enums.QuestionSubmitStatusEnum;
+import com.chengwu.onlineJudge.model.vo.QuestionSubmitVO;
 import com.chengwu.onlineJudge.service.QuestionService;
 import com.chengwu.onlineJudge.service.QuestionSubmitService;
 import com.chengwu.onlineJudge.service.UserService;
+import com.chengwu.onlineJudge.utils.SqlUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * 针对表【question_submit(题目提交)】的数据库操作Service实现
@@ -78,62 +89,63 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
     }
 
 
-//    /**
-//     * 获取查询包装类（用户根据哪些字段查询，根据前端传来的请求对象，得到 mybatis 框架支持的查询 QueryWrapper 类）
-//     *
-//     * @param questionSubmitQueryRequest
-//     * @return
-//     */
-//    @Override
-//    public QueryWrapper<QuestionSubmit> getQueryWrapper(QuestionSubmitQueryRequest questionSubmitQueryRequest) {
-//        QueryWrapper<QuestionSubmit> queryWrapper = new QueryWrapper<>();
-//        if (questionSubmitQueryRequest == null) {
-//            return queryWrapper;
-//        }
-//        String language = questionSubmitQueryRequest.getLanguage();
-//        Integer status = questionSubmitQueryRequest.getStatus();
-//        Long questionId = questionSubmitQueryRequest.getQuestionId();
-//        Long userId = questionSubmitQueryRequest.getUserId();
-//        String sortField = questionSubmitQueryRequest.getSortField();
-//        String sortOrder = questionSubmitQueryRequest.getSortOrder();
-//
-//        // 拼接查询条件
-//        queryWrapper.eq(StringUtils.isNotBlank(language), "language", language);
-//        queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
-//        queryWrapper.eq(ObjectUtils.isNotEmpty(questionId), "questionId", questionId);
-//        queryWrapper.eq(QuestionSubmitStatusEnum.getEnumByValue(status) != null, "status", status);
-//        queryWrapper.eq("isDelete", false);
-//        queryWrapper.orderBy(SqlUtils.validSortField(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
-//                sortField);
-//        return queryWrapper;
-//    }
-//
-//    @Override
-//    public QuestionSubmitVO getQuestionSubmitVO(QuestionSubmit questionSubmit, User loginUser) {
-//        QuestionSubmitVO questionSubmitVO = QuestionSubmitVO.objToVo(questionSubmit);
-//        // 脱敏：仅本人和管理员能看见自己（提交 userId 和登录用户 id 不同）提交的代码
-//        long userId = loginUser.getId();
-//        // 处理脱敏
-//        if (userId != questionSubmit.getUserId() && !userService.isAdmin(loginUser)) {
-//            questionSubmitVO.setCode(null);
-//        }
-//        return questionSubmitVO;
-//    }
-//
-//    @Override
-//    public Page<QuestionSubmitVO> getQuestionSubmitVOPage(Page<QuestionSubmit> questionSubmitPage, User loginUser) {
-//        List<QuestionSubmit> questionSubmitList = questionSubmitPage.getRecords();
-//        Page<QuestionSubmitVO> questionSubmitVOPage = new Page<>(questionSubmitPage.getCurrent(), questionSubmitPage.getSize(), questionSubmitPage.getTotal());
-//        if (CollectionUtils.isEmpty(questionSubmitList)) {
-//            return questionSubmitVOPage;
-//        }
-//        List<QuestionSubmitVO> questionSubmitVOList = questionSubmitList.stream()
-//                .map(questionSubmit -> getQuestionSubmitVO(questionSubmit, loginUser))
-//                .collect(Collectors.toList());
-//        questionSubmitVOPage.setRecords(questionSubmitVOList);
-//        return questionSubmitVOPage;
-//    }
+    /**
+     * 获取查询包装类（用户根据哪些字段查询，根据前端传来的请求对象，得到 mybatis 框架支持的查询 QueryWrapper 类）
+     *
+     * @param questionSubmitQueryRequest
+     * @return
+     */
+    @Override
+    public QueryWrapper<QuestionSubmit> getQueryWrapper(QuestionSubmitQueryRequest questionSubmitQueryRequest) {
+        QueryWrapper<QuestionSubmit> queryWrapper = new QueryWrapper<>();
+        if (questionSubmitQueryRequest == null) {
+            return queryWrapper;
+        }
+        String language = questionSubmitQueryRequest.getLanguage();
+        Integer status = questionSubmitQueryRequest.getStatus();
+        Long questionId = questionSubmitQueryRequest.getQuestionId();
+        Long userId = questionSubmitQueryRequest.getUserId();
+        String sortField = questionSubmitQueryRequest.getSortField();
+        String sortOrder = questionSubmitQueryRequest.getSortOrder();
 
+        // 拼接查询条件
+        queryWrapper.eq(StringUtils.isNotBlank(language), "language", language);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(questionId), "questionId", questionId);
+        queryWrapper.eq(QuestionSubmitStatusEnum.getEnumByValue(status) != null, "status", status);
+        queryWrapper.eq("isDelete", false);
+        queryWrapper.orderBy(SqlUtils.validSortField(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
+                sortField);
+        return queryWrapper;
+    }
+
+    @Override
+    public QuestionSubmitVO getQuestionSubmitVO(QuestionSubmit questionSubmit, User loginUser) {
+        QuestionSubmitVO questionSubmitVO = QuestionSubmitVO.objToVo(questionSubmit);
+        // 脱敏：仅本人和管理员能看见自己（提交 userId 和登录用户 id 不同）提交的代码
+        long userId = loginUser.getId();
+        // 处理脱敏
+        if (userId != questionSubmit.getUserId() && !userService.isAdmin(loginUser)) {
+            questionSubmitVO.setCode(null);
+        }
+        return questionSubmitVO;
+    }
+
+    @Override
+    public Page<QuestionSubmitVO> getQuestionSubmitVOPage(Page<QuestionSubmit> questionSubmitPage, User loginUser) {
+        List<QuestionSubmit> questionSubmitList = questionSubmitPage.getRecords();
+        if (CollectionUtils.isEmpty(questionSubmitList)) {
+            return new Page<>();
+        }
+        List<QuestionSubmitVO> questionSubmitVOList = questionSubmitList.stream()
+                .map(questionSubmit -> getQuestionSubmitVO(questionSubmit, loginUser)).collect(Collectors.toList());
+        Page<QuestionSubmitVO> questionSubmitVOPage = new Page<>();
+        questionSubmitVOPage.setRecords(questionSubmitVOList);
+        questionSubmitVOPage.setTotal(questionSubmitPage.getTotal());
+        questionSubmitVOPage.setSize(questionSubmitPage.getSize());
+        questionSubmitVOPage.setCurrent(questionSubmitPage.getCurrent());
+        return questionSubmitVOPage;
+    }
 
 }
 
