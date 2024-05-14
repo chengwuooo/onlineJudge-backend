@@ -1,6 +1,7 @@
 package com.chengwu.onlineJudge.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chengwu.onlineJudge.model.dto.question.QuestionQueryRequest;
 import com.chengwu.onlineJudge.model.entity.Question;
 import com.baomidou.mybatisplus.extension.service.IService;
