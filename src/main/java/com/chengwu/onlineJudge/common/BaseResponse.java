@@ -25,11 +25,17 @@ public class BaseResponse<T> implements Serializable {
         this.message = message;
     }
 
+    public BaseResponse(int code, Long data, String message) {
+        this.code = code;
+        this.data = (T) data;
+        this.message = message;
+    }
+
     public BaseResponse(int code, T data) {
         this(code, data, "");
     }
 
     public BaseResponse(ErrorCode errorCode) {
-        this(errorCode.getCode(), null, errorCode.getMessage());
+        this(errorCode.getCode(), (T) null, errorCode.getMessage());
     }
 }

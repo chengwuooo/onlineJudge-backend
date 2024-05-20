@@ -207,6 +207,23 @@ public class QuestionController {
     }
 
     /**
+     * 根据 id 获取
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/get")
+    public BaseResponse<QuestionVO> getQuestionById(long id, HttpServletRequest request) {
+        if (id <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Question question = questionService.getById(id);
+        if (question == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        return ResultUtils.success(questionService.getQuestionVO(question, request));
+    }
+    /**
      * 分页获取列表（仅管理员）
      *
      * @param questionQueryRequest
@@ -240,7 +257,6 @@ public class QuestionController {
                 questionService.getQueryWrapper(questionQueryRequest));
         return ResultUtils.success(questionService.getQuestionVOPage(questionPage, request));
     }
-
     /**
      * 分页获取当前用户创建的资源列表
      *

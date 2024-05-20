@@ -15,10 +15,12 @@ import com.chengwu.onlineJudge.model.enums.UserRoleEnum;
 import com.chengwu.onlineJudge.model.vo.LoginUserVO;
 import com.chengwu.onlineJudge.model.vo.UserVO;
 import com.chengwu.onlineJudge.utils.SqlUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
+
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +38,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 盐值，混淆密码
      */
-    public static final String SALT = "chengwu";
+    public static final String SALT = "fcw";
 
     @Override
     public long userRegister(String userAccount, String userPassword, String checkPassword) {
@@ -63,7 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号重复");
             }
             // 2. 加密
-            String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
+            String encryptPassword = DigestUtils.md5DigestAsHex((userPassword + SALT).getBytes());
             // 3. 插入数据
             User user = new User();
             user.setUserAccount(userAccount);
@@ -89,7 +91,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码错误");
         }
         // 2. 加密
-        String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
+        String encryptPassword = DigestUtils.md5DigestAsHex((userPassword + SALT).getBytes());
         // 查询用户是否存在
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userAccount", userAccount);

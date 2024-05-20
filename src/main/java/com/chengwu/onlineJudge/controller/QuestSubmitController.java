@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 
 /**
@@ -45,8 +44,8 @@ public class QuestSubmitController {
         }
         // 登录才能提交
         final User loginUser = userService.getLoginUser(request);
-        long result = questionsubmitService.doQuestionSubmit(questionsubmitAddRequest, loginUser);
-        return ResultUtils.success(Math.toIntExact(result));
+        Long result = questionsubmitService.doQuestionSubmit(questionsubmitAddRequest, loginUser);
+        return ResultUtils.success(result);
     }
 
     @PostMapping("/list/page")
