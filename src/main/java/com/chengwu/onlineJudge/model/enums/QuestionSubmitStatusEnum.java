@@ -4,9 +4,9 @@ import com.chengwu.onlineJudge.model.entity.QuestionSubmit;
 
 public enum QuestionSubmitStatusEnum {
     WAITING(0, "等待中"),
-    SUCCESS(1, "成功"),
+    SUCCEED(1, "成功"),
     FAILED(2, "失败"),
-    RUNNING(3, "运行中");
+    RUNNING(3, "运行中")
 
     ;
     private final int value;

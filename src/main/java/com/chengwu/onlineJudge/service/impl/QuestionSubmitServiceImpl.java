@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chengwu.onlineJudge.common.ErrorCode;
 import com.chengwu.onlineJudge.constant.CommonConstant;
 import com.chengwu.onlineJudge.exception.BusinessException;
+import com.chengwu.onlineJudge.judge.JudgeService;
 import com.chengwu.onlineJudge.model.dto.questionsubmit.QuestionSubmitAddRequest;
 import com.chengwu.onlineJudge.model.dto.questionsubmit.QuestionSubmitQueryRequest;
 import com.chengwu.onlineJudge.model.entity.Question;
@@ -22,10 +23,12 @@ import com.chengwu.onlineJudge.service.UserService;
 import com.chengwu.onlineJudge.utils.SqlUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -40,9 +43,9 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
     @Resource
     private UserService userService;
 
-//    @Resource
-//    @Lazy
-//    private JudgeService judgeService;
+    @Resource
+    @Lazy
+    private JudgeService judgeService;
 
     /**
      * 提交题目
@@ -82,9 +85,9 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         }
         Long questionSubmitId = questionSubmit.getId();
         // 执行判题服务
-//        CompletableFuture.runAsync(() -> {
-//            judgeService.doJudge(questionSubmitId);
-//        });
+        CompletableFuture.runAsync(() -> {
+            judgeService.doJudge(questionSubmitId);
+        });
         return questionSubmitId;
     }
 

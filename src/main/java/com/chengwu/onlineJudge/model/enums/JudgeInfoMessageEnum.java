@@ -1,6 +1,7 @@
 package com.chengwu.onlineJudge.model.enums;
 
 public enum JudgeInfoMessageEnum {
+    WAITING("等待中", "Waiting"),
     ACCEPTED("成功", "Accepted"),
     WRONG_ANSWER("答案错误", "Wrong Answer"),
     TIME_LIMIT_EXCEEDED("超时", "Time Limit Exceeded"),
