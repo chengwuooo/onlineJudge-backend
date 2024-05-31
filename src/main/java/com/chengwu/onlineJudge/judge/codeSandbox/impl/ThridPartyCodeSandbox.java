@@ -7,7 +7,7 @@ import com.chengwu.onlineJudge.judge.codeSandbox.model.ExecuteCodeResponse;
 //第三方沙箱
 public class ThridPartyCodeSandbox implements CodeSandbox {
     @Override
-    public ExecuteCodeResponse excuteCode(ExecuteCodeRequest executeCodeRequest) {
+    public ExecuteCodeResponse executeCode(ExecuteCodeRequest executeCodeRequest) {
         return null;
     }
 }

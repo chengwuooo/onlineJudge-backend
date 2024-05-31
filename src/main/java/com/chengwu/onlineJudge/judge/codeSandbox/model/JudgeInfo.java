@@ -1,4 +1,4 @@
-package com.chengwu.onlineJudge.model.vo;
+package com.chengwu.onlineJudge.judge.codeSandbox.model;
 
 import lombok.Data;
 

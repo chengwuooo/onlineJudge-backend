@@ -1,6 +1,7 @@
 package com.chengwu.onlineJudge.model.vo;
 
 import cn.hutool.json.JSONUtil;
+import com.chengwu.onlineJudge.judge.codeSandbox.model.JudgeInfo;
 import com.chengwu.onlineJudge.model.entity.QuestionSubmit;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;

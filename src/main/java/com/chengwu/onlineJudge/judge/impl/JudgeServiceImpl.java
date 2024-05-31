@@ -18,7 +18,7 @@ import com.chengwu.onlineJudge.model.dto.question.JudgeCase;
 import com.chengwu.onlineJudge.model.entity.Question;
 import com.chengwu.onlineJudge.model.entity.QuestionSubmit;
 import com.chengwu.onlineJudge.model.enums.QuestionSubmitStatusEnum;
-import com.chengwu.onlineJudge.model.vo.JudgeInfo;
+import com.chengwu.onlineJudge.judge.codeSandbox.model.JudgeInfo;
 import com.chengwu.onlineJudge.service.QuestionService;
 import com.chengwu.onlineJudge.service.QuestionSubmitService;
 import org.springframework.beans.factory.annotation.Value;
@@ -88,7 +88,7 @@ public class JudgeServiceImpl implements JudgeService {
         // 调用沙箱环境执行代码并获取执行结果
         CodeSandbox codeSandbox = CodeSandboxFactory.newInstance(type);
         codeSandbox = new CodeSandboxProxy(codeSandbox);
-        ExecuteCodeResponse executeCodeResponse = codeSandbox.excuteCode(executeCodeRequest);
+        ExecuteCodeResponse executeCodeResponse = codeSandbox.executeCode(executeCodeRequest);
 
         // 使用判题策略处理沙箱执行结果，生成判题信息
         JudgeContext judgeContext = JudgeContext.builder().question(question).executeCodeResponse(executeCodeResponse).build();
@@ -105,9 +105,7 @@ public class JudgeServiceImpl implements JudgeService {
         update = questionSubmitService.updateById(questionSubmitUpdate);
         if (!update) {
             throw new BusinessException(ErrorCode.OPERATION_ERROR, "更新题目提交状态失败");
-
         }
-
         // 返回更新后的题目提交信息
         return questionSubmitService.getById(questionSubmitId);
     }

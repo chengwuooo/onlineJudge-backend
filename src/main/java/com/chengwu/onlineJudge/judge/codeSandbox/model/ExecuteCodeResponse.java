@@ -1,6 +1,5 @@
 package com.chengwu.onlineJudge.judge.codeSandbox.model;
 
-import com.chengwu.onlineJudge.model.vo.JudgeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,4 +20,7 @@ public class ExecuteCodeResponse {
 
     // 代码执行信息
     private JudgeInfo judgeInfo;
+
+    // 代码（编译|执行）信息
+    private String message;
 }

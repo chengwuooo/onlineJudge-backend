@@ -7,6 +7,6 @@ public interface CodeSandbox {
     /**
      * 执行代码
      */
-    ExecuteCodeResponse excuteCode(ExecuteCodeRequest executeCodeRequest);
+    ExecuteCodeResponse executeCode(ExecuteCodeRequest executeCodeRequest);
 
 }

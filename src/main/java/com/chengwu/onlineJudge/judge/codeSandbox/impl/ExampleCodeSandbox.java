@@ -8,7 +8,7 @@ import com.chengwu.onlineJudge.judge.codeSandbox.model.ExecuteCodeResponse;
 // 示例代码沙箱
 public class ExampleCodeSandbox implements CodeSandbox {
     @Override
-    public ExecuteCodeResponse excuteCode(ExecuteCodeRequest executeCodeRequest) {
+    public ExecuteCodeResponse executeCode(ExecuteCodeRequest executeCodeRequest) {
      String code = executeCodeRequest.getCode();
      String language = executeCodeRequest.getLanguage();
 //     List<String> input = executeCodeRequest.getInput();
