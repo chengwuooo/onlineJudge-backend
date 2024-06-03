@@ -16,7 +16,7 @@ public class ExecuteCodeResponse {
     private List<String> executeOutput;
 
     // 代码执行状态
-    private String status;
+    private Integer status;
 
     // 代码执行信息
     private JudgeInfo judgeInfo;

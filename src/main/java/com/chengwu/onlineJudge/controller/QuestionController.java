@@ -16,10 +16,15 @@ import com.chengwu.onlineJudge.model.dto.question.QuestionAddRequest;
 import com.chengwu.onlineJudge.model.dto.question.QuestionEditRequest;
 import com.chengwu.onlineJudge.model.dto.question.QuestionQueryRequest;
 import com.chengwu.onlineJudge.model.dto.question.QuestionUpdateRequest;
+import com.chengwu.onlineJudge.model.dto.questionsubmit.QuestionSubmitAddRequest;
+import com.chengwu.onlineJudge.model.dto.questionsubmit.QuestionSubmitQueryRequest;
 import com.chengwu.onlineJudge.model.entity.Question;
+import com.chengwu.onlineJudge.model.entity.QuestionSubmit;
 import com.chengwu.onlineJudge.model.entity.User;
+import com.chengwu.onlineJudge.model.vo.QuestionSubmitVO;
 import com.chengwu.onlineJudge.model.vo.QuestionVO;
 import com.chengwu.onlineJudge.service.QuestionService;
+import com.chengwu.onlineJudge.service.QuestionSubmitService;
 import com.chengwu.onlineJudge.service.UserService;
 import java.util.List;
 import javax.annotation.Resource;
@@ -39,9 +44,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/question")
 @Slf4j
 public class QuestionController {
-
     @Resource
     private QuestionService questionService;
+
+    @Resource
+    private QuestionSubmitService questionsubmitService;
 
     @Resource
     private UserService userService;
@@ -283,13 +290,13 @@ public class QuestionController {
 
     // endregion
 
-    /**
-     * 分页搜索（从 ES 查询，封装类）
-     *
-     * @param questionQueryRequest
-     * @param request
-     * @return
-     */
+//    /**
+//     * 分页搜索（从 ES 查询，封装类）
+//     *
+//     * @param questionQueryRequest
+//     * @param request
+//     * @return
+//     */
 //    @PostMapping("/search/page/vo")
 //    public BaseResponse<Page<QuestionVO>> searchQuestionVOByPage(@RequestBody QuestionQueryRequest questionQueryRequest,
 //                                                         HttpServletRequest request) {
@@ -301,5 +308,33 @@ public class QuestionController {
 //    }
 
 
+    @PostMapping("/question_submit/do")
+    public BaseResponse<Integer> doQuestionSubmit(@RequestBody QuestionSubmitAddRequest questionsubmitAddRequest,
+                                                  HttpServletRequest request) {
+        if (questionsubmitAddRequest == null || questionsubmitAddRequest.getQuestionId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 登录才能提交
+        final User loginUser = userService.getLoginUser(request);
+        Long result = questionsubmitService.doQuestionSubmit(questionsubmitAddRequest, loginUser);
+        return ResultUtils.success(result);
+    }
 
+    @PostMapping("/question_submit/list/page")
+    public BaseResponse<Page<QuestionSubmitVO>> listQuestionSubmitByPage(@RequestBody QuestionSubmitQueryRequest questionSubmitQueryRequest, HttpServletRequest request) {
+        User loginUser = userService.getLoginUser(request);
+        if (questionSubmitQueryRequest == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        int pageSize = questionSubmitQueryRequest.getPageSize();
+        int pageNum = questionSubmitQueryRequest.getCurrent();
+        if (pageSize <= 0 || pageNum <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Page<QuestionSubmit> questionSubmitPage = questionsubmitService.page(new Page<>(pageNum, pageSize),
+                questionsubmitService.getQueryWrapper(questionSubmitQueryRequest));
+
+        Page<QuestionSubmitVO> questionSubmitVOPage = questionsubmitService.getQuestionSubmitVOPage(questionSubmitPage, loginUser);
+        return ResultUtils.success(questionSubmitVOPage);
+    }
 }

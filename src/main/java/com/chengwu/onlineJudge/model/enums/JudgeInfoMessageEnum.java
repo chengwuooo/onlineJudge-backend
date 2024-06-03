@@ -2,6 +2,7 @@ package com.chengwu.onlineJudge.model.enums;
 
 public enum JudgeInfoMessageEnum {
     WAITING("等待中", "Waiting"),
+    RUNNING("运行中", "Running"),
     ACCEPTED("成功", "Accepted"),
     WRONG_ANSWER("答案错误", "Wrong Answer"),
     TIME_LIMIT_EXCEEDED("超时", "Time Limit Exceeded"),
@@ -11,6 +12,7 @@ public enum JudgeInfoMessageEnum {
     SYSTEM_ERROR("系统错误", "System Error"),
     OUTPUT_LIMIT_EXCEEDED("输出超限", "Output Limit Exceeded"),
     PRESENTATION_ERROR("格式错误", "Presentation Error"),
+    UNKNOWN_ERROR("未知错误", "Unknown Error")
     ;
     final String text;
     final String value;
