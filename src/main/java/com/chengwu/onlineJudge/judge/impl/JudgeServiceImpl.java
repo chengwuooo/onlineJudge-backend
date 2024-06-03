@@ -100,7 +100,14 @@ public class JudgeServiceImpl implements JudgeService {
             throw new BusinessException(ErrorCode.OPERATION_ERROR, "判题失败");
         }
 
-        questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.SUCCEED.getValue());
+        String statusText = judgeInfo.getMessage();
+        if (statusText.equals(QuestionSubmitStatusEnum.SUCCEED.getText())) {
+            questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.SUCCEED.getValue());
+            question.setAcceptedNum(question.getAcceptedNum() + 1);
+            questionService.updateById(question);
+        } else {
+            questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.FAILED.getValue());
+        }
         questionSubmitUpdate.setJudgeInfo(JSONUtil.toJsonStr(judgeInfo));
         update = questionSubmitService.updateById(questionSubmitUpdate);
         if (!update) {
