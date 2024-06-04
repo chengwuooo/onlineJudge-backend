@@ -96,10 +96,6 @@ public class JudgeServiceImpl implements JudgeService {
         JudgeInfo judgeInfo = strategy.doJudge(judgeContext);
 
         // 根据判题结果更新题目提交状态为成功，并保存判题信息
-        if (executeCodeResponse == null) {
-            throw new BusinessException(ErrorCode.OPERATION_ERROR, "判题失败");
-        }
-
         String statusText = judgeInfo.getMessage();
         if (statusText.equals(QuestionSubmitStatusEnum.SUCCEED.getText())) {
             questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.SUCCEED.getValue());

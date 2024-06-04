@@ -22,7 +22,7 @@ public class RemoteCodeSandbox implements CodeSandbox {
 
         System.out.println("远程沙箱执行代码");
         System.out.println(executeCodeRequest);
-        String url = "http://code-sandbox.chengwu.icu:8083/executeCode";
+        String url = "code-sandbox.chengwu.icu/executeCode";
         String json = JSONUtil.toJsonStr(executeCodeRequest);
         System.out.println(json);
 
@@ -31,14 +31,6 @@ public class RemoteCodeSandbox implements CodeSandbox {
                 body(json).
                 execute().
                 body();
-        if (StringUtils.isBlank(responseStr)) {
-            throw new BusinessException(ErrorCode.OPERATION_REMOTE_ERROR);
-        }
-        System.out.println(responseStr);
-
-
-        ExecuteCodeResponse executeCodeResponse = JSONUtil.toBean(responseStr, ExecuteCodeResponse.class);
-
-        return executeCodeResponse;
+        return JSONUtil.toBean(responseStr, ExecuteCodeResponse.class);
     }
 }

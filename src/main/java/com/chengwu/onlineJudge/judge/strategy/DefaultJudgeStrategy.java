@@ -42,7 +42,7 @@ public class DefaultJudgeStrategy implements JudgeStrategy {
         Long time = judgeInfo.getTime();
         Long memory = judgeInfo.getMemory();
         // 若无执行时间或内存信息，则判为系统错误
-        if (time == null || memory == null) {
+        if (time == null || memory == null || time <= 0 || memory <= 0) {
             judgeInfoMessage = JudgeInfoMessageEnum.SYSTEM_ERROR;
             judgeInfoResult.setMessage(judgeInfoMessage.getText());
             return judgeInfoResult;
