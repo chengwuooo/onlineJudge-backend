@@ -5,6 +5,7 @@ import com.chengwu.onlineJudge.judge.codeSandbox.model.ExecuteCodeRequest;
 import com.chengwu.onlineJudge.judge.codeSandbox.model.ExecuteCodeResponse;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.chengwu.onlineJudge.common.ErrorCode;
 import com.chengwu.onlineJudge.exception.BusinessException;
@@ -76,7 +77,7 @@ public class JudgeServiceImpl implements JudgeService {
         // 准备判题输入，包括题目所配置的输入用例
         String judgeCaseStr = question.getJudgeCase();
         List<JudgeCase> judgeCaseList = JSONUtil.toList(judgeCaseStr, JudgeCase.class);
-        List<String> inputList = judgeCaseList.stream().map(JudgeCase::getInput).toList();
+        List<String> inputList = judgeCaseList.stream().map(JudgeCase::getInput).collect(Collectors.toList());
 
         // 构建执行代码的请求
         ExecuteCodeRequest executeCodeRequest = ExecuteCodeRequest.builder()

@@ -12,6 +12,7 @@ import com.chengwu.onlineJudge.service.QuestionService;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class DefaultJudgeStrategy implements JudgeStrategy {
     /**
@@ -68,7 +69,7 @@ public class DefaultJudgeStrategy implements JudgeStrategy {
 
         // 获取执行输出和题目期望输出
         List<String> executeOutput = executeCodeResponse.getExecuteOutput();
-        List<String> questionOutput = JSONUtil.toList(question.getJudgeCase(), JudgeCase.class).stream().map(JudgeCase::getOutput).toList();
+        List<String> questionOutput = JSONUtil.toList(question.getJudgeCase(), JudgeCase.class).stream().map(JudgeCase::getOutput).collect(Collectors.toList());
         // 检查输出行数是否一致，不一致则判为错误答案
         if (executeOutput.size() != questionOutput.size()) {
             judgeInfoMessage = JudgeInfoMessageEnum.WRONG_ANSWER;
