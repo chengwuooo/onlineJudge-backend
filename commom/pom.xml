@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>commom</artifactId>
+    <version>0.0.4-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

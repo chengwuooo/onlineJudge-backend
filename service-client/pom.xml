@@ -8,6 +8,7 @@
         <version>0.0.4-SNAPSHOT</version>
     </parent>
     <artifactId>service-client</artifactId>
+    <version>0.0.4-SNAPSHOT</version>
     <name>service-client</name>
     <description>service-client</description>
     <properties>

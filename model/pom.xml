@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>model</artifactId>
+    <version>0.0.4-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>com.chengwu</groupId>
