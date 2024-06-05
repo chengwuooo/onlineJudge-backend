@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * 主类（项目启动入口）
  */
 @SpringBootApplication
+@EnableDiscoveryClient
 @MapperScan("com.chengwu.onlineJudge.mapper")
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
