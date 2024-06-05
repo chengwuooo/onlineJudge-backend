@@ -27,6 +27,13 @@ spring:
     multipart:
       # 大小限制
       max-file-size: 10MB
+  # nacos配置
+  cloud:
+    nacos:
+      serverAddr: 127.0.0.1:8848
+  config:
+    import:
+      - nacos:nacos-config-example.properties?refreshEnabled=true
 server:
   address: 0.0.0.0
   port: 8201
