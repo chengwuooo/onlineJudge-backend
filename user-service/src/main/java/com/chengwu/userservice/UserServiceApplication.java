@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.chengwu.serviceclient.service")
+//@EnableFeignClients(basePackages = "com.chengwu.serviceclient.service")
 @MapperScan("com.chengwu.userservice.mapper")
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 @EnableScheduling

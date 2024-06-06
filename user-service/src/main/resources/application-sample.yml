@@ -43,6 +43,7 @@ server:
       cookie:
         max-age: 2592000
         domain: localhost
+        path: /api
 
 # mybatis-plus项目配置
 mybatis-plus:
