@@ -10,6 +10,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**
@@ -19,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface QuestionFeignClient{
 
     @GetMapping("/get/id")
-    Question getQuestionById(@Param("questionId") long questionId);
+    Question getQuestionById(@RequestParam("questionId") long questionId);
 
     @GetMapping("/question_submit/get/id")
-    QuestionSubmit getQuestionSubmitById(@Param("questionSubmitId") long questionSubmitId);
+    QuestionSubmit getQuestionSubmitById(@RequestParam("questionSubmitId") long questionSubmitId);
 
     @PostMapping("/update")
     Boolean updateQuestionById(@RequestBody Question question);

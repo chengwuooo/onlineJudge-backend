@@ -6,10 +6,7 @@ import com.chengwu.questionservice.service.QuestionService;
 import com.chengwu.questionservice.service.QuestionSubmitService;
 import com.chengwu.serviceclient.service.QuestionFeignClient;
 import feign.Param;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -24,13 +21,13 @@ public class QuestionInnerController implements QuestionFeignClient {
 
     @Override
     @GetMapping("/get/id")
-    public Question getQuestionById(@Param("questionId") long questionId) {
+    public Question getQuestionById(@RequestParam("questionId") long questionId) {
         return questionService.getById(questionId);
     }
 
     @Override
     @GetMapping("/question_submit/get/id")
-    public QuestionSubmit getQuestionSubmitById(@Param("questionSubmitId") long questionSubmitId) {
+    public QuestionSubmit getQuestionSubmitById(@RequestParam("questionSubmitId") long questionSubmitId) {
         return questionSubmitService.getById(questionSubmitId);
     }
 

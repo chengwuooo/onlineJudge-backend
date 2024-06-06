@@ -18,6 +18,7 @@ import com.chengwu.common.constant.CommonConstant;
 import com.chengwu.common.exception.BusinessException;
 import com.chengwu.common.utils.SqlUtils;
 import com.chengwu.questionservice.mapper.QuestionSubmitMapper;
+import com.chengwu.questionservice.rabbitmq.MyMessageProducer;
 import com.chengwu.questionservice.service.QuestionService;
 import com.chengwu.questionservice.service.QuestionSubmitService;
 import com.chengwu.serviceclient.service.JudgeFeignClient;
@@ -47,6 +48,10 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
     @Resource
     @Lazy
     private JudgeFeignClient judgeFeignClient;
+
+    @Resource
+    private MyMessageProducer myMessageProducer;
+
 
     /**
      * 提交题目
@@ -88,9 +93,11 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         questionService.updateById(question);
         Long questionSubmitId = questionSubmit.getId();
         // 执行判题服务
-        CompletableFuture.runAsync(() -> {
-            judgeFeignClient.doJudge(questionSubmitId);
-        });
+//        CompletableFuture.runAsync(() -> {
+//            judgeFeignClient.doJudge(questionSubmitId);
+//        });
+        // 发送消息到 RabbitMQ
+        myMessageProducer.sendMessage("code_exchange", "my_routingKey", String.valueOf(questionSubmitId));
         return questionSubmitId;
     }
 

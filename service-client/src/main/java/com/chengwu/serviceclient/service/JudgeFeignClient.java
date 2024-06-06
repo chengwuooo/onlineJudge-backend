@@ -1,11 +1,9 @@
 package com.chengwu.serviceclient.service;
 
-
 import chengwu.model.model.entity.QuestionSubmit;
-import feign.Param;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 判题服务接口
@@ -19,5 +17,5 @@ public interface JudgeFeignClient {
      * @return
      */
     @GetMapping("/do")
-    QuestionSubmit doJudge(@Param("questionSubmitId") long questionSubmitId);
+    QuestionSubmit doJudge(@RequestParam("questionSubmitId") long questionSubmitId);
 }

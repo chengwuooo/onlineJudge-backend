@@ -1,5 +1,6 @@
 package com.chengwu.judgeservice;
 
+import com.chengwu.judgeservice.rabbitmq.MqInitMain;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -20,6 +21,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class JudgeServiceApplication {
 
     public static void main(String[] args) {
+        // 初始化消息队列
+        MqInitMain.doInit();
         SpringApplication.run(JudgeServiceApplication.class, args);
     }
 
