@@ -5,14 +5,16 @@ import com.chengwu.serviceclient.service.UserFeignClient;
 import com.chengwu.userservice.service.UserService;
 import feign.Param;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
-@RestController("/inner")
+@RestController
+@RequestMapping("/inner")
 public class UserInnerController implements UserFeignClient {
     @Resource
     private UserService userService;
@@ -20,13 +22,13 @@ public class UserInnerController implements UserFeignClient {
     /**
      * 根据用户 id 获取用户信息
      *
-     * @param userId
+     * @param id
      * @return
      */
     @Override
     @GetMapping("/get/id")
-    public User getById(@Param("userId") long userId) {
-        return userService.getById(userId);
+    public User getById(@RequestParam("id") Long id) {
+        return userService.getById(id);
     }
 
     /**

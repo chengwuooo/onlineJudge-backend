@@ -5,11 +5,13 @@ import com.chengwu.judgeservice.judge.JudgeService;
 import com.chengwu.serviceclient.service.JudgeFeignClient;
 import feign.Param;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
-@RestController("/inner")
+@RestController
+@RequestMapping("/inner")
 public class JudgeInnerController implements JudgeFeignClient {
     @Resource
     private JudgeService judgeService;

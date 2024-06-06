@@ -22,12 +22,13 @@ import java.util.List;
 public interface UserFeignClient {
     /**
      * 根据用户 id 获取用户信息
-     *
-     * @param userId
+     * @param id
      * @return
      */
     @GetMapping("/get/id")
-    User getById(@RequestParam("userId") long userId);
+    User getById(@RequestParam("id") Long id);
+
+
 
     /**
      * 根据用户 id列表 获取用户信息
@@ -36,7 +37,7 @@ public interface UserFeignClient {
      * @return
      */
     @GetMapping("/get/ids")
-    List<User> listByIds(Collection<Long> userIds);
+    List<User> listByIds(@RequestParam("userIds") Collection<Long> userIds);
 
 
     /**
@@ -86,6 +87,5 @@ public interface UserFeignClient {
         BeanUtils.copyProperties(user, userVO);
         return userVO;
     }
-
 
 }
