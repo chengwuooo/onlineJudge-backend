@@ -9,7 +9,7 @@
         <version>0.0.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>commom</artifactId>
+    <artifactId>common</artifactId>
     <version>0.0.4-SNAPSHOT</version>
 
     <properties>

@@ -1,0 +1,78 @@
+spring:
+  application:
+    name: user-service
+  # 默认 dev 环境
+  profiles:
+    active: prod
+  #Redis配置
+  redis:
+    port: 6379
+    host: ip
+    database: 7
+    password: password
+  # session 配置
+  session:
+    timeout: 86400
+    store-type: redis
+
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://ip:3306/fcw?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: yourName
+    password: yourPassword
+
+  # 文件上传
+  servlet:
+    multipart:
+      # 大小限制
+      max-file-size: 10MB
+  # nacos配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr:
+          127.0.0.1:8848
+server:
+  address: 0.0.0.0
+  port: 8201
+  servlet:
+    context-path: /api/user
+    # cookie 30 天过期
+    session:
+      cookie:
+        max-age: 2592000
+        domain: localhost
+        path: /api
+
+# mybatis-plus项目配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.chengwu.userservice.controller
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+
+
