@@ -21,8 +21,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class JudgeServiceApplication {
 
     public static void main(String[] args) {
-        // 初始化消息队列
-        MqInitMain.doInit();
         SpringApplication.run(JudgeServiceApplication.class, args);
     }
 
